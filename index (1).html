@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIGHT DROP — Le compagnon de jeu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0613;--bg2:#140b22;--card:#1a0f2c;--line:#2e1d47;--pink:#ff2e88;--orange:#ff8a3d;--cyan:#22e4ff;--green:#4dffa6;--text:#f6eefe;--mute:#a99bbf}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+button{font:inherit;cursor:pointer;border:0}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.promo{background:linear-gradient(90deg,var(--pink),var(--orange));color:#1a0010;text-align:center;font-weight:800;font-size:13px;padding:8px 12px}
+header{position:sticky;top:0;z-index:20;background:rgba(11,6,19,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'Bebas Neue';font-size:32px;letter-spacing:2px;background:linear-gradient(90deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav a{color:var(--mute);text-decoration:none;font-size:14px;margin:0 12px}
+.nav a:hover{color:var(--text)}
+@media(max-width:720px){.nav .links{display:none}}
+.btn{display:inline-block;background:linear-gradient(90deg,var(--pink),var(--orange));color:#fff;padding:14px 26px;border-radius:999px;font-weight:800;text-decoration:none;box-shadow:0 8px 30px rgba(255,46,136,.35);text-align:center}
+.btn.sm{padding:10px 18px;font-size:14px}
+.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none}
+
+.hero{position:relative;overflow:hidden;padding:60px 0 80px}
+.hero svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.hgrid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+@media(max-width:900px){.hgrid{grid-template-columns:1fr}}
+.eyebrow{display:inline-block;border:1px solid var(--cyan);color:var(--cyan);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+h1{font-family:'Bebas Neue';font-size:clamp(50px,8vw,100px);line-height:.92;margin:18px 0 14px}
+h1 span{background:linear-gradient(180deg,#ffd36b,var(--orange) 45%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{max-width:540px;color:#d7c9ea;font-size:18px}
+.count{display:flex;gap:10px;margin:26px 0}
+.count div{background:rgba(26,15,44,.85);border:1px solid var(--line);border-radius:14px;padding:10px 14px;min-width:76px;text-align:center}
+.count b{display:block;font-family:'Bebas Neue';font-size:40px;line-height:1;color:var(--cyan)}
+.count small{color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.pricehero{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pricehero .p{font-family:'Bebas Neue';font-size:48px;line-height:1}
+.pricehero s{color:var(--mute);font-size:22px;margin-left:6px}
+.pricehero small{display:block;color:var(--orange);font-weight:600;font-size:13px}
+
+/* phone demo */
+.phone{width:310px;max-width:100%;margin:0 auto;background:#07040d;border:3px solid #2e1d47;border-radius:42px;padding:14px;box-shadow:0 30px 80px rgba(255,46,136,.25)}
+.screen{background:var(--bg2);border-radius:30px;overflow:hidden;height:560px;display:flex;flex-direction:column}
+.sbar{display:flex;justify-content:space-between;padding:10px 18px 4px;font-size:11px;color:var(--mute)}
+.tabs{display:flex;gap:4px;padding:8px 10px;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;background:none;color:var(--mute);font-size:12px;padding:8px 2px;border-radius:10px;font-weight:600}
+.tabs button.on{background:var(--card);color:var(--text)}
+.pane{flex:1;overflow:auto;padding:12px 14px}
+.pane h4{font-family:'Bebas Neue';font-size:22px;letter-spacing:.5px}
+.pane .hint{font-size:11px;color:var(--mute);margin-bottom:10px}
+.prog{background:var(--card);border-radius:12px;padding:10px;margin-bottom:10px;font-size:12px}
+.prog .bar{height:6px;background:var(--line);border-radius:9px;margin-top:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--orange));transition:width .3s}
+.chk{display:flex;gap:10px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer;user-select:none}
+.chk .box{width:18px;height:18px;border:2px solid var(--line);border-radius:5px;flex:none;display:grid;place-items:center;font-size:12px}
+.chk.done .box{background:var(--green);border-color:var(--green);color:#002010}
+.chk.done span.t{color:var(--mute);text-decoration:line-through}
+.chk small{margin-left:auto;color:var(--mute);font-size:11px}
+.lock{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px;font-size:12px;color:var(--mute);text-align:center;margin-top:8px}
+.mrow{display:flex;justify-content:space-between;align-items:center;background:var(--card);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:13px}
+.mrow b{color:var(--green);font-size:13px}
+.blur{filter:blur(4px);opacity:.6}
+.set{background:var(--card);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:12px}
+.set b{display:block;font-size:13px;margin-bottom:2px}
+.set span{color:var(--cyan)}
+
+section{padding:50px 0}
+h2{font-family:'Bebas Neue';font-size:48px;line-height:1}
+.lead{color:var(--mute);margin:8px 0 26px;max-width:640px}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:860px){.mods{grid-template-columns:1fr}}
+.mod{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px}
+.mod .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;margin-bottom:14px}
+.mod h3{font-size:19px;margin-bottom:6px}
+.mod p{color:var(--mute);font-size:14px}
+.mod .when{display:inline-block;margin-top:14px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.now{background:rgba(77,255,166,.12);color:var(--green)}
+.later{background:rgba(255,138,61,.14);color:var(--orange)}
+
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:860px){.timeline{grid-template-columns:1fr 1fr}}
+.step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;position:relative}
+.step .d{font-family:'Bebas Neue';font-size:26px;color:var(--cyan)}
+.step p{font-size:14px;color:var(--mute)}
+
+.plans{display:grid;grid-template-columns:1fr;gap:20px;max-width:460px}
+@media(max-width:760px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column}
+.plan.best{border:2px solid var(--pink);background:linear-gradient(160deg,#2a0f3d,#1a0f2c 60%)}
+.plan .tag{align-self:flex-start;background:var(--pink);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase;margin-bottom:10px}
+.plan h3{font-size:20px}
+.plan .pr{font-family:'Bebas Neue';font-size:56px;line-height:1;margin:10px 0 2px}
+.plan .pr s{font-size:24px;color:var(--mute);margin-left:8px}
+.plan .pr small{font-family:Inter;font-size:15px;color:var(--mute)}
+.plan ul{list-style:none;margin:16px 0 22px;flex:1}
+.plan li{padding:6px 0;font-size:14px;display:flex;gap:8px}
+.plan li::before{content:'✓';color:var(--green);font-weight:800}
+.plan li.no{color:var(--mute)}
+.plan li.no::before{content:'—';color:var(--mute)}
+.secure{font-size:12px;color:var(--mute);text-align:center;margin-top:10px}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px;max-width:860px}
+summary{font-weight:600;cursor:pointer}
+details p{color:var(--mute);margin-top:8px;font-size:14px}
+
+.final{text-align:center;background:linear-gradient(135deg,#2a0f3d,#3d1230 60%,#4a2312);border:1px solid var(--line);border-radius:28px;padding:44px 20px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:30px 0;color:var(--mute);font-size:13px}
+
+.modal{position:fixed;inset:0;display:none;place-items:center;z-index:70;background:rgba(0,0,0,.72);padding:20px}
+.modal.on{display:grid}
+.box2{background:var(--bg2);border:1px solid var(--line);border-radius:22px;padding:28px;max-width:440px;width:100%}
+.box2 h3{font-family:'Bebas Neue';font-size:34px}
+.box2 p{color:var(--mute);margin:8px 0 16px;font-size:14px}
+.box2 input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:13px 16px;border-radius:12px;font:inherit;margin-bottom:12px}
+.sumline{display:flex;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:14px;font-weight:700}
+.note{font-size:12px;color:var(--orange);margin-top:12px}
+.x{float:right;background:none;color:var(--mute);font-size:24px;line-height:1}
+.sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(20,11,34,.95);border-top:1px solid var(--line);padding:10px 16px;display:none;justify-content:space-between;align-items:center;z-index:30;backdrop-filter:blur(8px)}
+@media(max-width:720px){.sticky.on{display:flex}}
+</style>
+</head>
+<body>
+
+<div class="promo" id="promo">🔥 Prix de prévente 9,99 € jusqu'à la sortie · ensuite 12,99 €</div>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">NIGHT DROP</div>
+    <nav class="links"><a href="#app">L'appli</a><a href="#livraison">Livraison</a><a href="#prix">Prix</a><a href="#faq">FAQ</a></nav>
+    <a class="btn sm" href="#prix">Obtenir l'accès</a>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="bg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0613"/><stop offset=".6" stop-color="#2e0c3a"/><stop offset="1" stop-color="#6a1a4a"/></linearGradient>
+      <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd36b"/><stop offset="1" stop-color="#ff2e88"/></linearGradient>
+    </defs>
+    <rect width="1200" height="700" fill="url(#sky)"/>
+    <circle cx="300" cy="620" r="200" fill="url(#sun)" opacity=".35"/>
+    <g fill="#0b0613"><rect x="0" y="600" width="1200" height="100"/><rect x="30" y="480" width="60" height="130"/><rect x="100" y="520" width="40" height="90"/><rect x="420" y="500" width="70" height="110"/><rect x="500" y="540" width="40" height="70"/></g>
+    <g stroke="#22e4ff" stroke-opacity=".2"><line x1="0" y1="640" x2="1200" y2="640"/><line x1="0" y1="672" x2="1200" y2="672"/></g>
+  </svg>
+  <div class="wrap hgrid">
+    <div>
+      <span class="eyebrow">Appli compagnon non officielle · en français</span>
+      <h1>NE JOUE PAS<br><span>À L'AVEUGLE.</span></h1>
+      <p class="sub">Les meilleures méthodes pour gagner de l'argent dans le jeu, une checklist interactive pour finir à 100 % et les réglages parfaits pour ta télé. Tout dans une appli sur ton téléphone, à côté de ta manette.</p>
+      <div class="count">
+        <div><b id="d">0</b><small>jours</small></div><div><b id="h">0</b><small>heures</small></div>
+        <div><b id="m">0</b><small>min</small></div><div><b id="s">0</b><small>sec</small></div>
+      </div>
+      <div class="pricehero">
+        <a class="btn" data-buy="lifetime" href="https://nightdropfr.gumroad.com/l/dmwuy" target="_blank" rel="noopener">Précommander l'accès</a>
+        <div><div class="p" id="heroPrice">9,99 € <s>12,99 €</s></div><small id="heroNote">Prix de lancement jusqu'au 19 novembre</small></div>
+      </div>
+    </div>
+
+    <div class="phone" aria-label="Aperçu de l'application">
+      <div class="screen">
+        <div class="sbar"><span>21:47</span><span>NIGHT DROP</span><span>● ● ●</span></div>
+        <div class="tabs">
+          <button class="on" data-tab="track">Tracker</button>
+          <button data-tab="money">Argent</button>
+          <button data-tab="tv">Réglages</button>
+        </div>
+        <div class="pane" id="pane"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="app">
+  <div class="wrap">
+    <h2>3 OUTILS, 1 APPLI</h2>
+    <p class="lead">Les trois choses que tout le monde cherche sur Google pendant les premières semaines. Ici, c'est rassemblé, trié et à jour.</p>
+    <div class="mods">
+      <div class="mod">
+        <div class="ic" style="background:rgba(77,255,166,.12)">💰</div>
+        <h3>Guide argent rapide</h3>
+        <p>Les méthodes légales dans le jeu, classées par gain estimé à l'heure, de la première heure de jeu à la fin de partie. Mis à jour dès qu'une meilleure méthode est confirmée.</p>
+        <span class="when later">Débloqué sous 48 h après la sortie</span>
+      </div>
+      <div class="mod">
+        <div class="ic" style="background:rgba(34,228,255,.12)">✅</div>
+        <h3>Tracker 100 %</h3>
+        <p>Missions annexes, objets cachés, défis et trophées. Coche au fur et à mesure, ta progression est sauvegardée et tu vois exactement ce qui te manque.</p>
+        <span class="when later">Rempli au fil des découvertes après la sortie</span>
+      </div>
+      <div class="mod">
+        <div class="ic" style="background:rgba(255,46,136,.14)">📺</div>
+        <h3>Réglages TV & console</h3>
+        <p>HDR, mode performance ou qualité, réglages par marque de télé (Samsung, LG, Sony, TCL), manette et audio. Pour jouer dans les meilleures conditions dès la première minute.</p>
+        <span class="when now">Disponible tout de suite</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="livraison">
+  <div class="wrap">
+    <h2>CE QUE TU REÇOIS, ET QUAND</h2>
+    <p class="lead">Personne n'a le jeu avant sa sortie. On te dit exactement ce qui est prêt maintenant et ce qui arrive ensuite.</p>
+    <div class="timeline">
+      <div class="step"><div class="d">Aujourd'hui</div><p>Accès immédiat à l'appli et au guide réglages TV & console.</p></div>
+      <div class="step"><div class="d">19 novembre</div><p>Sortie du jeu. Premiers conseils de démarrage publiés dans la nuit.</p></div>
+      <div class="step"><div class="d">Sous 48 h</div><p>Guide argent rapide et première version du tracker 100 % débloqués.</p></div>
+      <div class="step"><div class="d">Ensuite</div><p>Mises à jour continues, incluses dans ton accès, sans surcoût.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="prix">
+  <div class="wrap">
+    <h2>TON ACCÈS</h2>
+    <p class="lead">Paiement unique, accès à vie, mises à jour incluses.</p>
+    <div class="plans">
+      <div class="plan best">
+        
+        <h3>Accès à vie</h3>
+        <div class="pr" id="planPrice">9,99 € <s>12,99 €</s></div>
+        <small style="color:var(--orange);font-weight:600" id="planNote">Prix de prévente, jusqu'au 19 novembre</small>
+        <ul>
+          <li>Guide réglages TV & console, dès maintenant</li>
+          <li>Guide argent rapide</li>
+          <li>Tracker 100 % avec sauvegarde</li>
+          <li>Toutes les mises à jour, à vie</li>
+        </ul>
+        <a class="btn" data-buy="lifetime" href="https://nightdropfr.gumroad.com/l/dmwuy" target="_blank" rel="noopener">Précommander</a>
+        <div class="secure">🔒 Paiement sécurisé · remboursé sous 30 jours si ça ne te sert pas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>FAQ</h2>
+    <details><summary>C'est une appli à télécharger ?</summary><p>Non, c'est une appli web : tu l'ouvres dans le navigateur de ton téléphone, tu l'ajoutes à ton écran d'accueil, et c'est tout. Ça marche sur iPhone et Android.</p></details>
+    <details><summary>Pourquoi payer alors qu'il y aura des guides gratuits ?</summary><p>Parce que tout est au même endroit, en français, trié par efficacité, et que ton tracker garde ta progression. Pas de pubs, pas de vidéos de 20 minutes pour une info de 10 secondes.</p></details>
+    <details><summary>Est-ce que ça peut me faire bannir ?</summary><p>Non. On ne propose aucune triche, aucun mod, aucun glitch d'argent ni boost de compte : uniquement des méthodes normales du jeu et des conseils.</p></details>
+    <details><summary>Et si le contenu ne me convient pas ?</summary><p>Demande un remboursement dans les 30 jours, directement depuis ton reçu.</p></details>
+    <details><summary>C'est officiel ?</summary><p>Non. NIGHT DROP est un outil indépendant, non affilié à Rockstar Games ni à Take-Two Interactive.</p></details>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="final">
+      <h2>LE 19 AU SOIR, SOIS PRÊT.</h2>
+      <p class="lead" style="margin:10px auto 22px">Réglages optimisés ce soir, guide argent dans les 48 h suivant la sortie.</p>
+      <a class="btn" data-buy="lifetime" id="finalBtn" href="https://nightdropfr.gumroad.com/l/dmwuy" target="_blank" rel="noopener">Précommander pour 9,99 €</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:26px">NIGHT DROP</div>
+    <p style="margin-top:8px">Outil indépendant, non affilié à, ni approuvé par, Rockstar Games ou Take-Two Interactive. Aucun contenu, logo ou visuel du jeu n'est utilisé. PlayStation et Xbox sont des marques de leurs propriétaires respectifs.</p>
+    <p style="margin-top:8px">CGV · Mentions légales · Politique de remboursement · Contact</p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky"><span><b id="stickyPrice">9,99 €</b> <small style="color:var(--mute)">prévente</small></span><a class="btn sm" data-buy="lifetime" href="https://nightdropfr.gumroad.com/l/dmwuy" target="_blank" rel="noopener">Précommander</a></div>
+
+
+<script>
+// ---------- prix : prévente avant la sortie, plein tarif après ----------
+const RELEASE=new Date('2026-11-19T00:00:00+01:00').getTime();
+const PRE=9.99, FULL=12.99, SQUAD=2.99;
+const eur=v=>v.toFixed(2).replace('.',',')+' €';
+function priceNow(){return Date.now()<RELEASE?PRE:FULL}
+function applyPrices(){
+  const pre=Date.now()<RELEASE, p=priceNow();
+  document.getElementById('heroPrice').innerHTML=pre?`${eur(PRE)} <s>${eur(FULL)}</s>`:eur(FULL);
+  document.getElementById('planPrice').innerHTML=pre?`${eur(PRE)} <s>${eur(FULL)}</s>`:eur(FULL);
+  document.getElementById('stickyPrice').textContent=eur(p);
+  document.getElementById('finalBtn').textContent=(pre?'Précommander pour ':'Obtenir l\'accès pour ')+eur(p);
+  if(!pre){
+    document.getElementById('promo').textContent='🎮 Le jeu est sorti · guide argent et tracker en cours de déploiement';
+    document.getElementById('heroNote').textContent='Accès immédiat';
+    document.getElementById('planNote').textContent='Accès immédiat';
+    document.querySelectorAll('[data-buy="lifetime"]').forEach(b=>{if(b.id!=='finalBtn')b.textContent='Obtenir l\'accès'});
+  }
+}
+
+// ---------- compte à rebours ----------
+function tick(){
+  let s=Math.max(0,Math.floor((RELEASE-Date.now())/1000));
+  const d=Math.floor(s/86400);s%=86400;const h=Math.floor(s/3600);s%=3600;const m=Math.floor(s/60);s%=60;
+  document.getElementById('d').textContent=d;
+  document.getElementById('h').textContent=String(h).padStart(2,'0');
+  document.getElementById('m').textContent=String(m).padStart(2,'0');
+  document.getElementById('s').textContent=String(s).padStart(2,'0');
+}
+tick();setInterval(tick,1000);applyPrices();
+
+// ---------- démo de l'appli ----------
+const TRACK=[
+  ['Régler l\'HDR de ta télé','Réglages'],['Activer le mode performance','Réglages'],
+  ['Terminer le prologue','Histoire'],['Débloquer ta première planque','Histoire'],
+  ['Premier objet caché trouvé','Collection'],['Acheter un premier véhicule','Progression'],
+  ['Atteindre 100 000 $','Argent'],['10 missions annexes terminées','Annexes']
+];
+let done=[true,true,false,false,false,false,false,false];
+try{const s=JSON.parse(localStorage.getItem('nd_demo')||'null');if(Array.isArray(s)&&s.length===TRACK.length)done=s}catch(e){}
+const saveDemo=()=>{try{localStorage.setItem('nd_demo',JSON.stringify(done))}catch(e){}};
+let tab='track';
+
+function render(){
+  const pane=document.getElementById('pane');
+  if(tab==='track'){
+    const n=done.filter(Boolean).length, pct=Math.round(n/TRACK.length*100);
+    pane.innerHTML=`<h4>TRACKER 100 %</h4><div class="hint">Démo : touche une ligne pour la cocher</div>
+      <div class="prog">Progression : <b>${pct} %</b> · ${n}/${TRACK.length}<div class="bar"><i style="width:${pct}%"></i></div></div>
+      ${TRACK.map((t,i)=>`<div class="chk ${done[i]?'done':''}" data-i="${i}"><span class="box">${done[i]?'✓':''}</span><span class="t">${t[0]}</span><small>${t[1]}</small></div>`).join('')}
+      <div class="lock">🔒 La liste complète arrive avec le jeu</div>`;
+  }else if(tab==='money'){
+    pane.innerHTML=`<h4>ARGENT RAPIDE</h4><div class="hint">Classé par gain estimé à l'heure</div>
+      <div class="mrow"><span>#1 · Méthode début de partie</span><b>$$$</b></div>
+      <div class="mrow blur"><span>#2 · ████████ ██████</span><b>$$$</b></div>
+      <div class="mrow blur"><span>#3 · ██████ ███████████</span><b>$$</b></div>
+      <div class="mrow blur"><span>#4 · ████ ██████ ███</span><b>$$</b></div>
+      <div class="mrow blur"><span>#5 · ███████ ████</span><b>$</b></div>
+      <div class="lock">🔒 Débloqué sous 48 h après la sortie, pour tous les acheteurs</div>`;
+  }else{
+    pane.innerHTML=`<h4>RÉGLAGES TV</h4><div class="hint">Exemple de fiche, choisis ta marque dans l'appli</div>
+      <div class="set"><b>Mode d'image</b>Jeu / Game <span>· réduit le retard d'affichage</span></div>
+      <div class="set"><b>HDR console</b>Calibrer avant de lancer le jeu <span>· étape par étape</span></div>
+      <div class="set"><b>Mouvement / lissage</b>Désactivé <span>· évite l'effet flou</span></div>
+      <div class="set"><b>Mode console</b>Performance ou Qualité <span>· notre recommandation</span></div>
+      <div class="set blur"><b>Netteté / gamma</b>██ / ███</div>
+      <div class="lock">✅ Guide complet disponible dès l'achat</div>`;
+  }
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+}
+document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b){tab=b.dataset.tab;render()}});
+document.getElementById('pane').addEventListener('click',e=>{const r=e.target.closest('[data-i]');if(r){done[+r.dataset.i]=!done[+r.dataset.i];saveDemo();render()}});
+render();
+
+// barre d'achat mobile
+const sticky=document.getElementById('sticky');
+addEventListener('scroll',()=>sticky.classList.toggle('on',scrollY>600));
+</script>
+</body>
+</html>
